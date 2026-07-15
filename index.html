@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Pijamas - Asistente Virtual</title>
+    <!-- Tailwind CSS para diseño moderno y limpio -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts para tipografía amigable -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons para hermosos iconos limpios -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #fef2f2 0%, #f5f3ff 100%);
+        }
+        /* Personalización de barra de desplazamiento */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Encabezado de la tienda -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-pink-100 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-pink-400 to-indigo-400 flex items-center justify-center text-white shadow-md shadow-pink-200">
+                    <i data-lucide="sparkles" class="w-6 h-6 animate-pulse"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800 tracking-wide flex items-center gap-2">
+                        Dream Pijamas <span class="text-pink-500 text-sm font-semibold px-2 py-0.5 bg-pink-50 rounded-full border border-pink-100">Asistente Virtual</span>
+                    </h1>
+                    <p class="text-xs text-gray-500">Pijamas y pantuflas para tus mejores sueños ✨</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="inline-flex h-3 w-3 rounded-full bg-emerald-500 animate-ping"></span>
+                <span class="text-sm font-medium text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">Asistente en línea</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        
+        <!-- COLUMNA IZQUIERDA: Chatbot Interactivo (8/12 en desktop) -->
+        <section class="lg:col-span-7 flex flex-col bg-white rounded-3xl shadow-xl shadow-indigo-100/40 border border-slate-100 overflow-hidden h-[75vh] min-h-[500px]">
+            <!-- Cabecera del Chat -->
+            <div class="p-4 border-b border-slate-100 bg-gradient-to-r from-pink-50/50 to-indigo-50/50 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <div class="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold border-2 border-white shadow">
+                            ☁️
+                        </div>
+                        <span class="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-white"></span>
+                    </div>
+                    <div>
+                        <h2 class="font-bold text-gray-800 text-sm sm:text-base">Sayishop - Consejera de Sueños</h2>
+                        <p class="text-[11px] text-gray-400">Responde al instante</p>
+                    </div>
+                </div>
+                <button onclick="restartChat()" class="text-gray-400 hover:text-pink-500 transition-colors p-2 rounded-full hover:bg-pink-50" title="Reiniciar Chat">
+                    <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Contenedor de Mensajes -->
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50">
+                <!-- Se poblará con JS -->
+            </div>
+
+            <!-- Sugerencias de respuestas rápidas -->
+            <div class="px-4 py-2 bg-white border-t border-slate-100 overflow-x-auto whitespace-nowrap flex gap-2 no-scrollbar">
+                <button onclick="handleQuickAction('Ver catálogo')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-pink-50 text-pink-600 hover:bg-pink-100 transition-all border border-pink-100">
+                    🛏️ Ver catálogo
+                </button>
+                <button onclick="handleQuickAction('Ver carrito')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-all border border-indigo-100">
+                    🛒 Ver carrito
+                </button>
+                <button onclick="handleQuickAction('¿Cuáles son los más vendidos?')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-600 hover:bg-amber-100 transition-all border border-amber-100">
+                    🔥 Más vendidos
+                </button>
+                <button onclick="handleQuickAction('Recomiéndame un regalo de pareja')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-600 hover:bg-rose-100 transition-all border border-rose-100">
+                    💝 Regalo Pareja
+                </button>
+                <button onclick="handleQuickAction('Finalizar compra')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition-all border border-emerald-100">
+                    💳 Finalizar compra
+                </button>
+            </div>
+
+            <!-- Formulario de Entrada -->
+            <form id="chat-form" onsubmit="sendMessage(event)" class="p-3 bg-white border-t border-slate-100 flex items-center gap-2">
+                <input type="text" id="chat-input" placeholder="Pregúntame o añade un producto... (Ej: Agregar pijama 1)" class="flex-1 px-4 py-3 bg-slate-50 text-gray-700 placeholder-gray-400 text-sm rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300 transition-all" autocomplete="off">
+                <button type="submit" class="p-3 bg-gradient-to-r from-pink-500 to-indigo-500 hover:from-pink-600 hover:to-indigo-600 text-white rounded-2xl shadow-md transition-all duration-200 transform active:scale-95 flex items-center justify-center">
+                    <i data-lucide="send" class="w-5 h-5"></i>
+                </button>
+            </form>
+        </section>
+
+        <!-- COLUMNA DERECHA: Catálogo & Carrito Visual (5/12 en desktop) -->
+        <section class="lg:col-span-5 flex flex-col gap-6">
+            
+            <!-- Panel de Catálogo Rápido -->
+            <div class="bg-white p-5 rounded-3xl shadow-xl shadow-indigo-100/40 border border-slate-100 flex flex-col max-h-[420px]">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-bold text-gray-800 flex items-center gap-2">
+                        <span class="text-pink-500">✨</span> Catálogo de Productos
+                    </h3>
+                    <span class="text-xs text-gray-400">Presiona '+' para añadir directamente</span>
+                </div>
+
+                <!-- Tabs de Catálogo -->
+                <div class="flex border-b border-slate-100 mb-3 text-sm font-medium">
+                    <button onclick="switchTab('tab-pijamas', this)" class="flex-1 pb-2 border-b-2 border-pink-500 text-pink-600 font-semibold focus:outline-none tab-btn">
+                        Pijamas 🛏️
+                    </button>
+                    <button onclick="switchTab('tab-pantuflas', this)" class="flex-1 pb-2 border-b-2 border-transparent text-gray-400 hover:text-gray-600 focus:outline-none tab-btn">
+                        Pantuflas 🧦
+                    </button>
+                </div>
+
+                <!-- Listado de Pijamas -->
+                <div id="tab-pijamas" class="space-y-2 overflow-y-auto flex-1 pr-1 tab-content">
+                    <!-- JS poblará -->
+                </div>
+
+                <!-- Listado de Pantuflas -->
+                <div id="tab-pantuflas" class="space-y-2 overflow-y-auto flex-1 pr-1 tab-content hidden">
+                    <!-- JS poblará -->
+                </div>
+            </div>
+
+            <!-- Panel de Carrito de Compras Visual -->
+            <div class="bg-gradient-to-br from-indigo-900 to-slate-900 text-white p-6 rounded-3xl shadow-xl shadow-indigo-950/20 flex flex-col flex-1 min-h-[220px]">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-bold text-lg flex items-center gap-2">
+                        <i data-lucide="shopping-cart" class="w-5 h-5 text-pink-400"></i> Mi Carrito de Compras
+                    </h3>
+                    <span id="cart-count" class="bg-pink-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">0 items</span>
+                </div>
+
+                <div id="cart-list" class="flex-1 overflow-y-auto space-y-3 pr-1 max-h-[200px] text-sm text-slate-300">
+                    <!-- Se poblará con JS o mostrará carrito vacío -->
+                    <div class="flex flex-col items-center justify-center py-6 text-slate-400 text-center">
+                        <i data-lucide="shopping-bag" class="w-8 h-8 mb-2 opacity-40"></i>
+                        <p>El carrito está vacío.</p>
+                        <p class="text-xs text-slate-500 mt-1">¡Escribe al chat para añadir productos!</p>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-800 pt-4 mt-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-slate-400 text-sm">Total Estimado</span>
+                        <span id="cart-total" class="text-2xl font-bold text-white">$0.00</span>
+                    </div>
+                    <button onclick="handleQuickAction('Finalizar compra')" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-3 px-4 rounded-2xl transition-all duration-200 transform active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-pink-500/20">
+                        <i data-lucide="credit-card" class="w-5 h-5"></i> Finalizar Pedido
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de confirmación o alerta personalizada (reemplazo de alert) -->
+    <div id="custom-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl text-center transform transition-transform scale-95 duration-200">
+            <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4 text-pink-600">
+                <i id="modal-icon" data-lucide="shopping-bag" class="w-8 h-8"></i>
+            </div>
+            <h3 id="modal-title" class="text-xl font-bold text-gray-800 mb-2">¡Operación exitosa!</h3>
+            <p id="modal-desc" class="text-sm text-gray-500 mb-6">El producto ha sido añadido correctamente al carrito.</p>
+            <button onclick="closeModal()" class="w-full py-3 bg-pink-500 hover:bg-pink-600 text-white font-semibold rounded-2xl transition-all">
+                Entendido
+            </button>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="bg-white border-t border-slate-100 py-4 px-6 mt-8">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-400">
+            <p>© 2026 Dream Pijamas. Todos los derechos reservados.</p>
+            <p>Diseñado con amor para tardes acogedoras y mañanas mágicas 💤</p>
+        </div>
+    </footer>
+
+    <!-- Lógica de la aplicación -->
+    <script>
+        // Catálogo de Productos Oficial de la tienda
+        const CATALOG = [
+            // Pijamas (ID 1-5)
+            { id: 1, name: "Pijama de pareja Spider-Man + pantuflas", category: "pijama", price: 35, emoji: "🕷️", description: "El regalo perfecto para parejas arácnidas. ¡Súper abrigado!" },
+            { id: 2, name: "Pijama de pareja cuadros rojos", category: "pijama", price: 20, emoji: "🟥", description: "Clásico diseño navideño y acogedor para compartir." },
+            { id: 3, name: "Pijama de pareja Snoopy", category: "pijama", price: 25, emoji: "🐶", description: "Divertido y tierno pijama del perrito más querido." },
+            { id: 4, name: "Pijama Hello Kitty negro", category: "pijama", price: 35, emoji: "🐈‍⬛", description: "Estilo urbano y adorable con detalles de Kitty." },
+            { id: 5, name: "Pijama Hello Kitty blanco", category: "pijama", price: 32, emoji: "🐱", description: "Pijama de algodón premium, el clásico favorito de todos." },
+            // Pantuflas (ID 6-10)
+            { id: 6, name: "Pantuflas Vaca", category: "pantufla", price: 15, emoji: "🐮", description: "Divertido diseño de vaquita, cómodas y acolchadas." },
+            { id: 7, name: "Pantuflas Gatito Gris", category: "pantufla", price: 25, emoji: "🐱", description: "Súper suaves y con un hermoso diseño felino." },
+            { id: 8, name: "Pantuflas Hello Kitty", category: "pantufla", price: 25, emoji: "🎀", description: "El complemento perfecto para cualquier pijama de Kitty." },
+            { id: 9, name: "Pantuflas Dragón Negro", category: "pantufla", price: 30, emoji: "🐉", description: "Cómodas, imponentes y súper calientitas para días fríos." },
+            { id: 10, name: "Pantuflas Conejito Rosa", category: "pantufla", price: 35, emoji: "🐰", description: "Ternura máxima para tus pies. Suelas antideslizantes." }
+        ];
+
+        // Estado de la Aplicación
+        let cart = [];
+        let chatHistory = [];
+
+        // Inicialización
+        window.addEventListener('load', () => {
+            renderCatalogPanels();
+            restartChat();
+            lucide.createIcons();
+        });
+
+        // Renderiza el catálogo interactivo de la columna derecha
+        function renderCatalogPanels() {
+            const containerPijamas = document.getElementById('tab-pijamas');
+            const containerPantuflas = document.getElementById('tab-pantuflas');
+            
+            containerPijamas.innerHTML = '';
+            containerPantuflas.innerHTML = '';
+
+            CATALOG.forEach(product => {
+                const html = `
+                    <div class="flex items-center gap-3 p-3 bg-slate-50 hover:bg-pink-50/40 rounded-2xl border border-slate-100 transition-all duration-200">
+                        <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-2xl shadow-sm border border-slate-100 flex-shrink-0">
+                            ${product.emoji}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-bold text-gray-800 text-sm truncate">${product.name}</h4>
+                            <p class="text-xs text-gray-400 truncate">${product.description}</p>
+                            <p class="text-xs font-bold text-pink-500 mt-0.5">$${product.price}.00</p>
+                        </div>
+                        <button onclick="addToCartDirect(${product.id})" class="p-2 bg-white hover:bg-pink-500 hover:text-white text-slate-600 rounded-xl border border-slate-200 hover:border-pink-500 transition-all flex-shrink-0" title="Añadir al carrito">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                `;
+
+                if (product.category === 'pijama') {
+                    containerPijamas.insertAdjacentHTML('beforeend', html);
+                } else {
+                    containerPantuflas.insertAdjacentHTML('beforeend', html);
+                }
+            });
+            lucide.createIcons();
+        }
+
+        // Pestañas del Catálogo
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('border-pink-500', 'text-pink-600', 'font-semibold');
+                b.classList.add('border-transparent', 'text-gray-400');
+            });
+
+            btn.classList.add('border-pink-500', 'text-pink-600', 'font-semibold');
+            btn.classList.remove('border-transparent', 'text-gray-400');
+        }
+
+        // Reinicia la conversación del Chat
+        function restartChat() {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML = '';
+            
+            // Mensaje de bienvenida oficial
+            const welcomeText = `👋 ¡Hola! Bienvenido(a) a <b>Dream Pijamas</b> 🛍️✨\nEstoy aquí para ayudarte a encontrar el pijama o las pantuflas perfectas.\n\nPuedes escribirme directamente o usar los botones de abajo para interactuar:\n\n🛏️ <b>Ver catálogo</b>\n🛒 <b>Ver carrito</b>\n➕ <b>Agregar al carrito</b> [número o nombre]\n💳 <b>Finalizar compra</b>`;
+            
+            appendMessage('bot', welcomeText);
+        }
+
+        // Envía un mensaje como usuario
+        function sendMessage(e) {
+            if (e) e.preventDefault();
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            // Mostrar mensaje del usuario
+            appendMessage('user', text);
+            input.value = '';
+
+            // Responder con retraso simulado (efecto bot pensando)
+            setTimeout(() => {
+                processBotResponse(text);
+            }, 600);
+        }
+
+        // Hace click en una de las acciones rápidas
+        function handleQuickAction(actionText) {
+            appendMessage('user', actionText);
+            setTimeout(() => {
+                processBotResponse(actionText);
+            }, 500);
+        }
+
+        // Agrega un mensaje a la interfaz de chat
+        function appendMessage(sender, text) {
+            const container = document.getElementById('chat-messages');
+            const isBot = sender === 'bot';
+            
+            // Formatear saltos de línea a HTML <br>
+            const formattedText = text.replace(/\n/g, '<br>');
+
+            const msgHtml = `
+                <div class="flex ${isBot ? 'justify-start' : 'justify-end'} animate-fade-in">
+                    <div class="max-w-[85%] sm:max-w-[75%] rounded-2xl p-4 shadow-sm ${
+                        isBot 
+                        ? 'bg-white text-gray-800 border border-slate-100 rounded-tl-none' 
+                        : 'bg-gradient-to-r from-pink-500 to-indigo-500 text-white rounded-tr-none'
+                    }">
+                        <div class="text-sm leading-relaxed">${formattedText}</div>
+                        <div class="text-[9px] mt-1 text-right ${isBot ? 'text-gray-400' : 'text-pink-100'}">
+                            ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', msgHtml);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Lógica de respuesta automatizada del Chatbot
+        function processBotResponse(rawText) {
+            const text = rawText.toLowerCase().trim();
+
+            // 1. Mostrar Catálogo
+            if (text.includes('ver catalogo') || text.includes('ver catálogo') || text === 'catalogo' || text === 'catálogo') {
+                let response = `✨ <b>Nuestro Catálogo Oficial:</b>\n\n`;
+                response += `👚 <b>Pijamas:</b>\n`;
+                CATALOG.filter(p => p.category === 'pijama').forEach(p => {
+                    response += `${p.id}. ${p.name} — <b>$${p.price}</b>\n`;
+                });
+                response += `\n🧦 <b>Pantuflas:</b>\n`;
+                CATALOG.filter(p => p.category === 'pantufla').forEach(p => {
+                    response += `${p.id}. ${p.name} — <b>$${p.price}</b>\n`;
+                });
+                response += `\n💡 Para agregar uno, escribe por ejemplo: <i>"Agregar al carrito 1"</i> o haz clic en el botón '+' en la lista de la derecha.`;
+                appendMessage('bot', response);
+                return;
+            }
+
+            // 2. Ver Carrito de Compras
+            if (text.includes('ver carrito') || text === 'carrito') {
+                if (cart.length === 0) {
+                    appendMessage('bot', `🛒 Tu carrito de compras está vacío actualmente.\n¡Dime qué producto te gustaría añadir! 😊`);
+                } else {
+                    let response = `🛒 <b>Carrito de compras actual:</b>\n\n`;
+                    let total = 0;
+                    cart.forEach((item, index) => {
+                        const subtotal = item.product.price * item.quantity;
+                        total += subtotal;
+                        response += `• <b>${item.product.name}</b> (x${item.quantity}) — $${subtotal}\n`;
+                    });
+                    response += `\n<b>Total a pagar: $${total}</b>\n\nSi deseas quitar un artículo, escribe: <i>"Eliminar [número del producto]"</i>.`;
+                    appendMessage('bot', response);
+                }
+                return;
+            }
+
+            // 3. Recomendación de Parejas
+            if (text.includes('pareja') || text.includes('regalo para pareja') || text.includes('regalo de pareja')) {
+                appendMessage('bot', `💝 ¡Para parejas tenemos las mejores opciones acogedoras!\n\nTe súper recomiendo las <b>Pijamas de pareja de Spider-Man con pantuflas ($35)</b> o las hermosas <b>Pijamas de pareja a cuadros rojos ($20)</b>.\n\n💡 Un gran detalle es agregar unas hermosas <b>Pantuflas de Hello Kitty</b> o <b>Pantuflas de Conejito Rosa</b> para completar el conjunto perfecto. ¿Te gustaría añadir alguna al carrito?`);
+                return;
+            }
+
+            // 4. Los más vendidos
+            if (text.includes('vendido') || text.includes('más vendido') || text.includes('mas vendido') || text.includes('favoritos')) {
+                appendMessage('bot', `🔥 <b>¡Los favoritos de nuestros clientes!</b>\n\nNuestros productos estrellas son:\n1. 🕷️ <b>Pijama de pareja de Spider-Man + pantuflas</b> ($35)\n2. 🐱 <b>Pijama Hello Kitty negro</b> ($35)\n3. 🎀 <b>Pantuflas de Hello Kitty</b> ($25)\n4. 🐰 <b>Pantuflas de Conejito Rosa</b> ($35)\n\n¡Son un éxito garantizado si buscas la máxima comodidad!`);
+                return;
+            }
+
+            // 5. Finalizar Compra
+            if (text.includes('comprar') && !text.includes('agregar') && !text.includes('carrito') || text.includes('finalizar') || text.includes('finalizar compra') || text.includes('finalizar pedido')) {
+                if (cart.length === 0) {
+                    appendMessage('bot', `¡Oh! Aún no has añadido productos a tu carrito. Por favor, revisa nuestro catálogo y escribe <i>"Agregar al carrito [número]"</i> para poder procesar tu pedido. 🛍️`);
+                } else {
+                    let response = `🎉 <b>Resumen del pedido</b>\n\n<b>Productos elegidos:</b>\n`;
+                    let total = 0;
+                    cart.forEach(item => {
+                        const subtotal = item.product.price * item.quantity;
+                        total += subtotal;
+                        response += `• ${item.product.emoji} ${item.product.name} (x${item.quantity}) — $${subtotal}\n`;
+                    });
+                    response += `\n<b>Total a pagar: $${total}</b>\n\n¡Gracias por comprar con nosotros en Dream Pijamas! Tu pedido ha sido reservado. Te esperamos nuevamente. 💖✨`;
+                    
+                    // Limpiar el carrito después de finalizar la compra
+                    cart = [];
+                    updateCartUI();
+                    appendMessage('bot', response);
+                }
+                return;
+            }
+
+            // 6. Eliminar del carrito
+            if (text.includes('eliminar') || text.includes('quitar') || text.includes('remover')) {
+                // Buscar si mencionó un número de ID
+                const idMatch = text.match(/\d+/);
+                if (idMatch) {
+                    const productId = parseInt(idMatch[0]);
+                    const itemIndex = cart.findIndex(item => item.product.id === productId);
+                    if (itemIndex > -1) {
+                        const removedName = cart[itemIndex].product.name;
+                        cart.splice(itemIndex, 1);
+                        updateCartUI();
+                        appendMessage('bot', `❌ Se ha eliminado <b>"${removedName}"</b> de tu carrito de compras.\nEscribe <i>"Ver carrito"</i> para ver tu lista actualizada.`);
+                    } else {
+                        appendMessage('bot', `No encontré el producto con el ID ${productId} en tu carrito. Escribe <i>"Ver carrito"</i> para verificar qué productos tienes.`);
+                    }
+                } else {
+                    appendMessage('bot', `¿Qué producto deseas quitar del carrito? Escribe <i>"Eliminar [número de producto]"</i> para removerlo de la lista. (Ejemplo: "Eliminar 1")`);
+                }
+                return;
+            }
+
+            // 7. Agregar al carrito (Por ID o nombre aproximado)
+            if (text.includes('agregar') || text.includes('quiero comprar') || text.includes('llevame este') || text.includes('llévame este') || text.includes('añadir') || text.includes('añade')) {
+                // Buscar números en el texto (para IDs del 1 al 10)
+                const idMatch = text.match(/\b([1-9]|10)\b/);
+                let foundProduct = null;
+
+                if (idMatch) {
+                    const targetId = parseInt(idMatch[0]);
+                    foundProduct = CATALOG.find(p => p.id === targetId);
+                } else {
+                    // Buscar por coincidencia aproximada de palabras clave
+                    for (const product of CATALOG) {
+                        const nameParts = product.name.toLowerCase().split(' ');
+                        let matches = 0;
+                        nameParts.forEach(part => {
+                            if (part.length > 3 && text.includes(part)) {
+                                matches++;
+                            }
+                        });
+                        if (matches >= 2) { // Si coinciden al menos dos palabras clave
+                            foundProduct = product;
+                            break;
+                        }
+                    }
+                }
+
+                if (foundProduct) {
+                    addToCartLogic(foundProduct);
+                    appendMessage('bot', `➕ ¡Súper! He guardado <b>"${foundProduct.name}"</b> en tu carrito.\n🛒 El total actual es <b>$${getCartTotal()}</b>. Puedes seguir comprando o escribir <i>"Finalizar compra"</i>.`);
+                } else {
+                    appendMessage('bot', `No logré identificar qué producto deseas agregar. Por favor, indícame el número exacto del catálogo (Ej: <i>"Agregar al carrito 4"</i>) o el nombre completo del pijama o pantufla.`);
+                }
+                return;
+            }
+
+            // 8. Respuestas genéricas/amigables
+            if (text.includes('hola') || text.includes('buenos dias') || text.includes('buenas tardes')) {
+                appendMessage('bot', `👋 ¡Hola de nuevo! Qué alegría saludarte. 😊\n¿En qué te puedo asesorar hoy? Recuerda que puedo mostrarte el catálogo o recomendarte opciones cómodas.`);
+                return;
+            }
+
+            if (text.includes('gracias') || text.includes('muchas gracias')) {
+                appendMessage('bot', `¡Con muchísimo gusto! Aquí estaré siempre que quieras renovar tus noches de descanso. ¡Dulces sueños! ☁️💤`);
+                return;
+            }
+
+            if (text.includes('talla') || text.includes('colores') || text.includes('disponibilidad')) {
+                appendMessage('bot', `🎨 <b>Tallas y Colores:</b>\nNuestras pijamas son de diseño unisex y holgado. Contamos con tallas desde la **S** hasta la **XL** en todos los modelos.\n\nLas pantuflas son estándar expandibles (Tallas 35 a 40 para dama y 38 a 43 para caballeros).\n\n¿Te interesa alguna talla en particular para verificar?`);
+                return;
+            }
+
+            // Fallback por defecto amigable
+            appendMessage('bot', `Lo lamento, no logré entender por completo tu solicitud. 🥺 ¿Me podrías detallar mejor o usar alguno de mis atajos rápidos abajo?\n\n🛏️ <i>Ver catálogo</i>\n🛒 <i>Ver carrito</i>\n💳 <i>Finalizar compra</i>`);
+        }
+
+        // Agrega productos de forma directa (desde los paneles de la derecha)
+        function addToCartDirect(productId) {
+            const product = CATALOG.find(p => p.id === productId);
+            if (product) {
+                addToCartLogic(product);
+                // Mostrar alerta visual no intrusiva en pantalla
+                showModal("¡Producto Añadido!", `Añadiste "${product.name}" al carrito exitosamente.`, product.emoji);
+                // Enviar aviso simulado en el chat para mantener consistencia
+                appendMessage('bot', `➕ Has agregado de forma directa <b>"${product.name}"</b> al carrito.\nTotal estimado: <b>$${getCartTotal()}</b>.`);
+            }
+        }
+
+        // Lógica interna para manejar el estado del carrito
+        function addToCartLogic(product) {
+            const existingItem = cart.find(item => item.product.id === product.id);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ product: product, quantity: 1 });
+            }
+            updateCartUI();
+        }
+
+        // Quita una unidad de un producto del carrito desde la UI visual
+        function removeFromCartDirect(productId) {
+            const itemIndex = cart.findIndex(item => item.product.id === productId);
+            if (itemIndex > -1) {
+                if (cart[itemIndex].quantity > 1) {
+                    cart[itemIndex].quantity -= 1;
+                } else {
+                    cart.splice(itemIndex, 1);
+                }
+                updateCartUI();
+                appendMessage('bot', `❌ Se redujo / quitó un artículo del carrito desde el panel lateral.`);
+            }
+        }
+
+        // Obtener el precio total del carrito
+        function getCartTotal() {
+            return cart.reduce((total, item) => total + (item.product.price * item.quantity), 0);
+        }
+
+        // Actualiza el panel lateral derecho del carrito
+        function updateCartUI() {
+            const cartList = document.getElementById('cart-list');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('cart-total');
+
+            // Actualizar total y conteo
+            const total = getCartTotal();
+            const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+            cartCount.textContent = `${count} ${count === 1 ? 'item' : 'items'}`;
+            cartTotal.textContent = `$${total}.00`;
+
+            if (cart.length === 0) {
+                cartList.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-6 text-slate-400 text-center animate-fade-in">
+                        <i data-lucide="shopping-bag" class="w-8 h-8 mb-2 opacity-40"></i>
+                        <p>El carrito está vacío.</p>
+                        <p class="text-xs text-slate-500 mt-1">¡Escribe al chat para añadir productos!</p>
+                    </div>
+                `;
+            } else {
+                cartList.innerHTML = '';
+                cart.forEach(item => {
+                    const itemHtml = `
+                        <div class="flex items-center justify-between gap-2 bg-slate-800/50 p-2.5 rounded-xl border border-slate-700/40 animate-fade-in">
+                            <div class="flex items-center gap-2 min-w-0">
+                                <span class="text-xl flex-shrink-0">${item.product.emoji}</span>
+                                <div class="min-w-0">
+                                    <p class="font-semibold text-white text-xs truncate">${item.product.name}</p>
+                                    <p class="text-[10px] text-slate-400">$${item.product.price} c/u • Cant: ${item.quantity}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="text-xs font-bold text-pink-400 mr-1">$${item.product.price * item.quantity}</span>
+                                <button onclick="removeFromCartDirect(${item.product.id})" class="p-1 hover:bg-slate-700 rounded text-slate-400 hover:text-rose-400 transition-colors" title="Quitar uno">
+                                    <i data-lucide="minus-circle" class="w-4.5 h-4.5"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    cartList.insertAdjacentHTML('beforeend', itemHtml);
+                });
+            }
+            lucide.createIcons();
+        }
+
+        // Modales de Alerta Personalizados (reemplazo de alert)
+        function showModal(title, description, iconEmoji = "☁️") {
+            const modal = document.getElementById('custom-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDesc = document.getElementById('modal-desc');
+            const modalIcon = document.getElementById('modal-icon');
+
+            modalTitle.textContent = title;
+            modalDesc.textContent = description;
+            
+            // Si pasamos un emoji, reemplazamos el contenedor del icono
+            if (iconEmoji) {
+                modalIcon.parentElement.innerHTML = `<span class="text-4xl">${iconEmoji}</span>`;
+            }
+
+            modal.classList.remove('hidden');
+            // Forzar animación de entrada
+            modal.firstElementChild.classList.remove('scale-95');
+            modal.firstElementChild.classList.add('scale-100');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('custom-modal');
+            modal.firstElementChild.classList.remove('scale-100');
+            modal.firstElementChild.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                // Restaurar el icono de lucide original para futuras aperturas
+                const iconContainer = document.getElementById('modal-title').previousElementSibling;
+                iconContainer.innerHTML = `<i id="modal-icon" data-lucide="shopping-bag" class="w-8 h-8"></i>`;
+                lucide.createIcons();
+            }, 100);
+        }
+    </script>
+</body>
+</html>
